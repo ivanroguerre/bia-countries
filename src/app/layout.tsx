@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import { Geist, Geist_Mono } from "next/font/google";
+import TanstackQueryProvider from "@/components/tanstack-query-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 
@@ -35,7 +36,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TanstackQueryProvider>{children}</TanstackQueryProvider>
         </ThemeProvider>
       </body>
     </html>
