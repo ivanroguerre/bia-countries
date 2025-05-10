@@ -5,6 +5,8 @@ import TanstackQueryProvider from "@/components/tanstack-query-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 
+import Header from "@/components/header";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -36,7 +38,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TanstackQueryProvider>{children}</TanstackQueryProvider>
+          <TanstackQueryProvider>
+            <Header />
+            {children}
+          </TanstackQueryProvider>
         </ThemeProvider>
       </body>
     </html>
