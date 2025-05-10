@@ -25,3 +25,11 @@ export async function fetchCountriesByRegion(region: string): Promise<Country[]>
   }
   return response.json();
 }
+
+export async function fetchCountryByCode(code: string): Promise<Country[]> {
+  const response = await fetch(`${API_BASE_URL}/alpha/${code}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch country by code: ${code}`);
+  }
+  return response.json();
+}
