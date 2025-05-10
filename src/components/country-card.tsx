@@ -34,7 +34,7 @@ export function CountryCard({ country }: CountryCardProps) {
         >
           {country.name?.common || 'Unknown Country'}
         </CardTitle>
-        <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+        <div className="space-y-2 text-[14px] text-gray-700 dark:text-gray-300">
           <p>
             <span className="font-semibold">Population:</span>{" "}
             {formattedPopulation}

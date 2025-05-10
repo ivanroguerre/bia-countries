@@ -46,14 +46,17 @@ export default function CountryPage() {
   const getNativeName = (country: Country): string => {
     const nativeNameMap = country.name?.nativeName;
 
-    if (nativeNameMap && typeof nativeNameMap === 'object' && Object.keys(nativeNameMap).length > 0) {
+    if (
+      nativeNameMap &&
+      typeof nativeNameMap === "object" &&
+      Object.keys(nativeNameMap).length > 0
+    ) {
       const firstKey = Object.keys(nativeNameMap)[0];
       const nativeEntry = nativeNameMap[firstKey];
 
       return nativeEntry?.official ?? country.name?.common ?? "Unknown";
     }
 
-  
     return country.name?.common || "Unknown";
   };
 
@@ -93,7 +96,10 @@ export default function CountryPage() {
           {country.flags?.svg && (
             <Image
               src={country.flags.svg}
-              alt={country.flags.alt || `Flag of ${country.name?.common || 'Unknown'}`}
+              alt={
+                country.flags.alt ||
+                `Flag of ${country.name?.common || "Unknown"}`
+              }
               width={500}
               height={300}
               className="w-full h-auto object-contain rounded shadow-md mb-8"
@@ -102,40 +108,42 @@ export default function CountryPage() {
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold mb-6">{country.name?.common || "Unknown Country"}</h1>
+          <h1 className="font-bold mb-6 !text-2xl">
+            {country.name?.common || "Unknown Country"}
+          </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-base mb-6">
-            <p>
+            <p className="text-base">
               <strong>Native Name:</strong> {getNativeName(country)}
             </p>
-            <p>
+            <p className="text-base">
               <strong>Population:</strong>{" "}
               {country.population?.toLocaleString() || "N/A"}
             </p>
-            <p>
+            <p className="text-base">
               <strong>Region:</strong> {country.region || "N/A"}
             </p>
-            <p>
+            <p className="text-base">
               <strong>Sub Region:</strong> {country.subregion || "N/A"}
             </p>
-            <p>
+            <p className="text-base">
               <strong>Capital:</strong> {country.capital?.join(", ") || "N/A"}
             </p>
-            <p>
+            <p className="text-base">
               <strong>Top Level Domain:</strong>{" "}
               {country.tld?.join(", ") || "N/A"}
             </p>
-            <p>
+            <p className="text-base">
               <strong>Currencies:</strong> {getCurrencies(country)}
             </p>
-            <p>
+            <p className="text-base">
               <strong>Languages:</strong> {getLanguages(country)}
             </p>
           </div>
 
           {country.borders && country.borders.length > 0 && (
             <div className="mt-6">
-              <h2 className="text-xl font-semibold mb-2">
+              <h2 className="font-semibold mb-2 text-base">
                 Border Countries:
               </h2>
               <div className="flex flex-wrap gap-2">
@@ -144,7 +152,7 @@ export default function CountryPage() {
                     key={borderCode}
                     href={`/country/${borderCode.toLowerCase()}`}
                   >
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" className="text-base">
                       {getBorderCountryName(borderCode)}
                     </Button>
                   </Link>
