@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 import type { Country } from "@/types/country";
 import { CountryCard } from "@/components/country-card";
@@ -142,7 +143,9 @@ export default function CountriesPage() {
       {countriesToDisplay && countriesToDisplay.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
           {countriesToDisplay.map((country) => (
-            <CountryCard key={country.cca3} country={country} />
+            <Link key={country.cca3} href={`/country/${country.cca3}`}>
+              <CountryCard country={country} />
+            </Link>
           ))}
         </div>
       ) : (
