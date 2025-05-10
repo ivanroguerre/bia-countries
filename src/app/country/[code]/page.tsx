@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button"; // Assuming Shadcn Button path
 import type { Country } from "@/types/country";
-import { fetchCountryByCode } from "@/lib/api";
+import { fetchCountryByCode, fetchAllCountries } from "@/lib/api";
 
 export default function CountryPage() {
   const params = useParams();
@@ -21,6 +21,16 @@ export default function CountryPage() {
   } = useQuery<Country[], Error>({
     queryKey: ["country", countryCode],
     queryFn: () => fetchCountryByCode(countryCode),
+  });
+
+  const {
+    data: allCountries,
+    isLoading: isLoadingAll,
+    isError: isErrorAll,
+    error: errorAll,
+  } = useQuery<Country[], Error>({
+    queryKey: ["countries", "all"],
+    queryFn: fetchAllCountries,
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -63,11 +73,18 @@ export default function CountryPage() {
     return "N/A";
   };
 
+  // Helper to map border codes to country names
+  const getBorderCountryName = (code: string) => {
+    if (!allCountries) return code;
+    const match = allCountries.find((c) => c.cca3 === code);
+    return match?.name?.common || code;
+  };
+
   return (
     <div className="container mx-auto p-8">
       <div className="mb-8">
         <Link href="/countries">
-          <Button variant="outline">Back to Home</Button>
+          <Button variant="outline">Back</Button>
         </Link>
       </div>
 
@@ -77,8 +94,8 @@ export default function CountryPage() {
             <Image
               src={country.flags.svg}
               alt={country.flags.alt || `Flag of ${country.name?.common || 'Unknown'}`}
-              width={500} // Adjust width as needed
-              height={300} // Adjust height as needed
+              width={500}
+              height={300}
               className="w-full h-auto object-contain rounded shadow-md mb-8"
             />
           )}
@@ -87,10 +104,7 @@ export default function CountryPage() {
         <div>
           <h1 className="text-3xl font-bold mb-6">{country.name?.common || "Unknown Country"}</h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-sm mb-6">
-            <p>
-              <strong>Official Name:</strong> {country.name?.official || "N/A"}
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-base mb-6">
             <p>
               <strong>Native Name:</strong> {getNativeName(country)}
             </p>
@@ -102,7 +116,7 @@ export default function CountryPage() {
               <strong>Region:</strong> {country.region || "N/A"}
             </p>
             <p>
-              <strong>Subregion:</strong> {country.subregion || "N/A"}
+              <strong>Sub Region:</strong> {country.subregion || "N/A"}
             </p>
             <p>
               <strong>Capital:</strong> {country.capital?.join(", ") || "N/A"}
@@ -122,7 +136,7 @@ export default function CountryPage() {
           {country.borders && country.borders.length > 0 && (
             <div className="mt-6">
               <h2 className="text-xl font-semibold mb-2">
-                Bordering Countries:
+                Border Countries:
               </h2>
               <div className="flex flex-wrap gap-2">
                 {country.borders.map((borderCode) => (
@@ -131,7 +145,7 @@ export default function CountryPage() {
                     href={`/country/${borderCode.toLowerCase()}`}
                   >
                     <Button variant="ghost" size="sm">
-                      {borderCode}
+                      {getBorderCountryName(borderCode)}
                     </Button>
                   </Link>
                 ))}
