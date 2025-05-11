@@ -41,6 +41,8 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --input-shadow: var(--input-shadow);
 }
 
 :root {
@@ -76,6 +78,8 @@
   --sidebar-accent-foreground: hsl(200, 15%, 8%);
   --sidebar-border: hsl(0, 0%, 100%);
   --sidebar-ring: hsl(0, 0%, 100%);
+
+  --input-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 
 .dark {
