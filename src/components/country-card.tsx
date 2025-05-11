@@ -5,9 +5,10 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface CountryCardProps {
   country: Country;
+  priority?: boolean;
 }
 
-export function CountryCard({ country }: CountryCardProps) {
+export function CountryCard({ country, priority = false }: CountryCardProps) {
   const formattedPopulation = 
     typeof country.population === 'number'
       ? country.population.toLocaleString()
@@ -22,6 +23,7 @@ export function CountryCard({ country }: CountryCardProps) {
               src={country.flags.svg}
               alt={country.flags.alt || `Flag of ${country.name?.common || 'Unknown Country'}`}
               fill
+              priority={priority}
               className="object-cover"
             />
           </AspectRatio>

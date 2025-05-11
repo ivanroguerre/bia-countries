@@ -143,9 +143,9 @@ export default function CountriesPage() {
       </div>
       {countriesToDisplay && countriesToDisplay.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 px-16 pb-10">
-          {countriesToDisplay.map((country) => (
+          {countriesToDisplay.map((country, index) => (
             <Link key={country.cca3} href={`/country/${country.cca3}`}>
-              <CountryCard country={country} />
+              <CountryCard country={country} priority={index < 8} />
             </Link>
           ))}
         </div>
