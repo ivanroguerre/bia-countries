@@ -45,6 +45,14 @@
   --input-shadow: var(--input-shadow);
   --card-shadow: var(--card-shadow);
   --header-shadow: var(--header-shadow);
+
+  /* Custom colors */
+  --color-dark-blue: hsl(209, 23%, 22%);
+  --color-very-dark-blue: hsl(207, 26%, 17%);
+  /* Dark blue for light mode */
+  --color-very-dark-blue-2: hsl(200, 15%, 8%);
+  --color-dark-gray: hsl(0, 0%, 52%);
+  --color-very-light-gray: hsl(0, 0%, 98%);
 }
 
 :root {

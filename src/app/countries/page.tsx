@@ -113,7 +113,7 @@ export default function CountriesPage() {
     <div className="max-w-[1368px] mx-auto pt-5 sm:pt-10">
       <div className="flex flex-col sm:flex-row gap-10 mb-10 justify-between px-4 sm:px-16">
         <div className="relative w-full sm:w-[400px]">
-          <MagnifyingGlass className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+          <MagnifyingGlass className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground dark:text-white" size={18} />
           <Input
             type="text"
             placeholder="Search for a country..."
@@ -142,7 +142,7 @@ export default function CountriesPage() {
         </Select>
       </div>
       {countriesToDisplay && countriesToDisplay.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 px-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 px-16 pb-10">
           {countriesToDisplay.map((country) => (
             <Link key={country.cca3} href={`/country/${country.cca3}`}>
               <CountryCard country={country} />

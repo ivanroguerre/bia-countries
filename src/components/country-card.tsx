@@ -14,7 +14,7 @@ export function CountryCard({ country }: CountryCardProps) {
       : 'N/A';
 
   return (
-    <Card className="shadow-(--card-shadow) rounded-sm overflow-hidden p-0 gap-0 border-0">
+    <Card className="shadow-(--card-shadow) rounded-sm overflow-hidden p-0 gap-0 border-0 dark:bg-dark-blue">
       <CardHeader className="p-0">
         {country.flags?.svg && (
           <AspectRatio ratio={11 / 7} className="w-full">
