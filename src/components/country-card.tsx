@@ -22,7 +22,7 @@ export function CountryCard({ country }: CountryCardProps) {
               src={country.flags.svg}
               alt={country.flags.alt || `Flag of ${country.name?.common || 'Unknown Country'}`}
               fill
-              className="object-contain"
+              className="object-cover"
             />
           </AspectRatio>
         )}
