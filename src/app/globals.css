@@ -43,6 +43,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --input-shadow: var(--input-shadow);
+  --card-shadow: var(--card-shadow);
 }
 
 :root {
@@ -80,6 +81,7 @@
   --sidebar-ring: hsl(0, 0%, 100%);
 
   --input-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  --card-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 
 .dark {
