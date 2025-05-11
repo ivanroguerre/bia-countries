@@ -111,26 +111,24 @@ export default function CountriesPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-between">
-        <div className="relative max-w-sm">
+      <div className="flex flex-col sm:flex-row gap-10 mb-8 justify-between">
+        <div className="relative w-full sm:w-[400px]">
           <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
           <Input
             type="text"
             placeholder="Search for a country..."
             value={searchTerm}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
-            className="pl-9"
+            className="pl-9 w-full"
           />
         </div>
         <Select
           value={selectedRegion}
           onValueChange={(value: string) => {
             setSelectedRegion(value === "all" ? "" : value);
-            // Clear search term when region changes, or decide on interaction
-            // setSearchTerm(""); 
           }}
         >
-          <SelectTrigger className="w-full sm:w-[180px]">
+          <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Filter by Region" />
           </SelectTrigger>
           <SelectContent>
