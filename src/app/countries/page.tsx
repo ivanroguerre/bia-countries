@@ -110,8 +110,8 @@ export default function CountriesPage() {
   }
 
   return (
-    <div className="max-w-[1368px] mx-auto">
-      <div className="flex flex-col sm:flex-row gap-10 mb-8 justify-between">
+    <div className="max-w-[1368px] mx-auto pt-5 sm:pt-10">
+      <div className="flex flex-col sm:flex-row gap-10 mb-10 justify-between px-4 sm:px-16">
         <div className="relative w-full sm:w-[400px]">
           <MagnifyingGlass className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
           <Input
