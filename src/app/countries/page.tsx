@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { MagnifyingGlass } from "@phosphor-icons/react";
 
 import type { Country } from "@/types/country";
 import { CountryCard } from "@/components/country-card";
@@ -110,15 +111,17 @@ export default function CountriesPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">All Countries</h1>
-      <div className="flex flex-col sm:flex-row gap-4 mb-8">
-        <Input
-          type="text"
-          placeholder="Search for a country..."
-          value={searchTerm}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
-          className="max-w-sm"
-        />
+      <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-between">
+        <div className="relative max-w-sm">
+          <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+          <Input
+            type="text"
+            placeholder="Search for a country..."
+            value={searchTerm}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+            className="pl-9"
+          />
+        </div>
         <Select
           value={selectedRegion}
           onValueChange={(value: string) => {
