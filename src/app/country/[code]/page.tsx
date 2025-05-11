@@ -16,9 +16,9 @@ export default function CountryPage() {
 
   const {
     data: countryData,
-    isLoading,
-    isError,
-    error,
+    isLoading: isLoadingCountry,
+    isError: isErrorCountry,
+    error: errorCountry,
   } = useQuery<Country[], Error>({
     queryKey: ["country", countryCode],
     queryFn: () => fetchCountryByCode(countryCode),
@@ -34,8 +34,12 @@ export default function CountryPage() {
     queryFn: fetchAllCountries,
   });
 
+  const isLoading = isLoadingCountry || isLoadingAll;
+  const isError = isErrorCountry || isErrorAll;
+  const error = errorCountry || errorAll;
+
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching country data: {error?.message}</div>;
+  if (isError) return <div>Error fetching data: {error?.message}</div>;
 
   // The API returns an array, we expect a single country or for it to be empty/undefined
   const country = countryData?.[0];
