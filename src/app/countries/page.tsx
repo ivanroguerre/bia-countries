@@ -113,13 +113,13 @@ export default function CountriesPage() {
     <div className="container mx-auto p-4">
       <div className="flex flex-col sm:flex-row gap-10 mb-8 justify-between">
         <div className="relative w-full sm:w-[400px]">
-          <MagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+          <MagnifyingGlass className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
           <Input
             type="text"
             placeholder="Search for a country..."
             value={searchTerm}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
-            className="pl-9 w-full"
+            className="pl-16 w-full"
           />
         </div>
         <Select
