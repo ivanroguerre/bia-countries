@@ -45,7 +45,7 @@
   --input-shadow: var(--input-shadow);
   --card-shadow: var(--card-shadow);
   --header-shadow: var(--header-shadow);
-
+  --button-shadow: var(--button-shadow);
   /* Custom colors */
   --color-dark-blue: hsl(209, 23%, 22%);
   --color-very-dark-blue: hsl(207, 26%, 17%);
@@ -92,6 +92,7 @@
   --input-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
   --card-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
   --header-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  --button-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.4);
 }
 
 .dark {

@@ -1,11 +1,12 @@
 "use client";
 
+import { ArrowLeft } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 
-import { Button } from "@/components/ui/button"; // Assuming Shadcn Button path
+import { Button } from "@/components/ui/button";
 import type { Country } from "@/types/country";
 import { fetchCountryByCode, fetchAllCountries } from "@/lib/api";
 
@@ -84,14 +85,21 @@ export default function CountryPage() {
   };
 
   return (
-    <div className="container mx-auto p-8">
-      <div className="mb-8">
+    <div className="px-4 py-7 sm:px-16 sm:pt-16 mx-auto max-w-[1368px]">
+      <div className="mb-14">
         <Link href="/countries">
-          <Button variant="outline">Back</Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className="border-0 shadow-(--button-shadow) rounded-xs px-5! pl-6! dark:bg-dark-blue"
+          >
+            <ArrowLeft size={16} />
+            Back
+          </Button>
         </Link>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 items-start">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-24 items-start md:items-center">
         <div>
           {country.flags?.svg && (
             <Image
@@ -102,7 +110,7 @@ export default function CountryPage() {
               }
               width={500}
               height={300}
-              className="w-full h-auto object-contain rounded shadow-md mb-8"
+              className="w-full h-auto object-contain shadow-md"
             />
           )}
         </div>
@@ -112,38 +120,48 @@ export default function CountryPage() {
             {country.name?.common || "Unknown Country"}
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 text-base mb-6">
-            <p className="text-base">
-              <strong>Native Name:</strong> {getNativeName(country)}
-            </p>
-            <p className="text-base">
-              <strong>Population:</strong>{" "}
-              {country.population?.toLocaleString() || "N/A"}
-            </p>
-            <p className="text-base">
-              <strong>Region:</strong> {country.region || "N/A"}
-            </p>
-            <p className="text-base">
-              <strong>Sub Region:</strong> {country.subregion || "N/A"}
-            </p>
-            <p className="text-base">
-              <strong>Capital:</strong> {country.capital?.join(", ") || "N/A"}
-            </p>
-            <p className="text-base">
-              <strong>Top Level Domain:</strong>{" "}
-              {country.tld?.join(", ") || "N/A"}
-            </p>
-            <p className="text-base">
-              <strong>Currencies:</strong> {getCurrencies(country)}
-            </p>
-            <p className="text-base">
-              <strong>Languages:</strong> {getLanguages(country)}
-            </p>
+          <div className="flex flex-col space-y-12 mb-12 md:flex-row md:space-x-20">
+            <div className="flex flex-col space-y-4 text-base">
+              <p className="text-base">
+                <strong className="font-semibold">Native Name:</strong>{" "}
+                {getNativeName(country)}
+              </p>
+              <p className="text-base">
+                <strong className="font-semibold">Population:</strong>{" "}
+                {country.population?.toLocaleString() || "N/A"}
+              </p>
+              <p className="text-base">
+                <strong className="font-semibold">Region:</strong>{" "}
+                {country.region || "N/A"}
+              </p>
+              <p className="text-base">
+                <strong className="font-semibold">Sub Region:</strong>{" "}
+                {country.subregion || "N/A"}
+              </p>
+              <p className="text-base">
+                <strong className="font-semibold">Capital:</strong>{" "}
+                {country.capital?.join(", ") || "N/A"}
+              </p>
+            </div>
+            <div className="flex flex-col space-y-4 text-base">
+              <p className="text-base">
+                <strong className="font-semibold">Top Level Domain:</strong>{" "}
+                {country.tld?.join(", ") || "N/A"}
+              </p>
+              <p className="text-base">
+                <strong className="font-semibold">Currencies:</strong>{" "}
+                {getCurrencies(country)}
+              </p>
+              <p className="text-base">
+                <strong className="font-semibold">Languages:</strong>{" "}
+                {getLanguages(country)}
+              </p>
+            </div>
           </div>
 
           {country.borders && country.borders.length > 0 && (
-            <div className="mt-6">
-              <h2 className="font-semibold mb-2 text-base">
+            <div className="flex flex-col items-start md:flex-row md:space-x-2 md:items-center">
+              <h2 className="font-semibold text-base">
                 Border Countries:
               </h2>
               <div className="flex flex-wrap gap-2">
@@ -152,7 +170,11 @@ export default function CountryPage() {
                     key={borderCode}
                     href={`/country/${borderCode.toLowerCase()}`}
                   >
-                    <Button variant="ghost" size="sm" className="text-base">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="border-0 shadow-(--button-shadow) rounded-xs px-5! dark:bg-dark-blue"
+                    >
                       {getBorderCountryName(borderCode)}
                     </Button>
                   </Link>
