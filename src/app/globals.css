@@ -44,6 +44,7 @@
 
   --input-shadow: var(--input-shadow);
   --card-shadow: var(--card-shadow);
+  --header-shadow: var(--header-shadow);
 }
 
 :root {
@@ -82,6 +83,7 @@
 
   --input-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
   --card-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  --header-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
 }
 
 .dark {
