@@ -14,7 +14,7 @@ export function CountryCard({ country }: CountryCardProps) {
       : 'N/A';
 
   return (
-    <Card className="shadow-lg rounded-sm overflow-hidden p-0 gap-0">
+    <Card className="shadow-lg rounded-sm overflow-hidden p-0 gap-0 border-0">
       <CardHeader className="p-0">
         {country.flags?.svg && (
           <AspectRatio ratio={11 / 7} className="w-full">
@@ -29,7 +29,7 @@ export function CountryCard({ country }: CountryCardProps) {
       </CardHeader>
       <CardContent className="p-6 pb-12">
         <CardTitle
-          className="text-xl font-bold mb-4 truncate"
+          className="text-md font-bold mb-4 truncate"
           title={country.name?.common || 'Unknown Country'}
         >
           {country.name?.common || 'Unknown Country'}
