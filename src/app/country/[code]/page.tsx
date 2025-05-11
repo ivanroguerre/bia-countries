@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import type { Country } from "@/types/country";
 import { fetchCountryByCode, fetchAllCountries } from "@/lib/api";
+import { getNativeName, getCurrencies, getLanguages, getBorderCountryName } from "@/utils/country";
 
 export default function CountryPage() {
   const params = useParams();
@@ -47,46 +48,6 @@ export default function CountryPage() {
   if (!country) {
     return <div>Country not found.</div>;
   }
-
-  const getNativeName = (country: Country): string => {
-    const nativeNameMap = country.name?.nativeName;
-
-    if (
-      nativeNameMap &&
-      typeof nativeNameMap === "object" &&
-      Object.keys(nativeNameMap).length > 0
-    ) {
-      const firstKey = Object.keys(nativeNameMap)[0];
-      const nativeEntry = nativeNameMap[firstKey];
-
-      return nativeEntry?.official ?? country.name?.common ?? "Unknown";
-    }
-
-    return country.name?.common || "Unknown";
-  };
-
-  const getCurrencies = (country: Country) => {
-    if (country.currencies) {
-      return Object.values(country.currencies)
-        .map((c) => `${c.name} (${c.symbol})`)
-        .join(", ");
-    }
-    return "N/A";
-  };
-
-  const getLanguages = (country: Country) => {
-    if (country.languages) {
-      return Object.values(country.languages).join(", ");
-    }
-    return "N/A";
-  };
-
-  // Helper to map border codes to country names
-  const getBorderCountryName = (code: string) => {
-    if (!allCountries) return code;
-    const match = allCountries.find((c) => c.cca3 === code);
-    return match?.name?.common || code;
-  };
 
   return (
     <div className="px-4 py-7 sm:px-16 sm:pt-16 mx-auto max-w-[1368px]">
@@ -179,7 +140,7 @@ export default function CountryPage() {
                       variant="outline"
                       className="border-0 shadow-(--button-shadow) rounded-xs px-5! dark:bg-dark-blue"
                     >
-                      {getBorderCountryName(borderCode)}
+                      {getBorderCountryName(borderCode, allCountries)}
                     </Button>
                   </Link>
                 ))}
