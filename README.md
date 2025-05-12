@@ -99,9 +99,11 @@ La aplicación consume la API de [REST Countries](https://restcountries.com) con
 
 ### Mejoras Futuras
 
-- Simplificación de la página de países y de detalle del país: abstracción de componentes, creación de hooks personalizados
+- Simplificación de la página de países y de detalle del país: abstracción de componentes, creación de hooks personalizados.
 para la obtención de la información desde los endpoints, etc.
 - Hacer uso de las distintas herramientas que proporciona el framework: decidir qué componentes debiesen ser componentes cliente y cuales deben ser componentes de lado del servidor, SSR, etc.
 - Implementación de pruebas e2e para ambas páginas.
-- Internacionalización
-- Implementación de más filtros y ordenamiento
+- Internacionalización.
+- Implementación de más filtros y ordenamiento.
+- Configuración de las estrategias de caché.
+- UI para estados de carga y de error.
