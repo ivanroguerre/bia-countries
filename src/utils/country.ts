@@ -18,7 +18,7 @@ export const getNativeName = (country: Country): string => {
 };
 
 export const getCurrencies = (country: Country): string => {
-  if (country.currencies) {
+  if (country.currencies && Object.keys(country.currencies).length > 0) {
     return Object.values(country.currencies)
       .map((c) => `${c.name} (${c.symbol})`)
       .join(", ");
