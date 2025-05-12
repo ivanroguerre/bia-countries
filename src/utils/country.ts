@@ -11,7 +11,7 @@ export const getNativeName = (country: Country): string => {
     const firstKey = Object.keys(nativeNameMap)[0];
     const nativeEntry = nativeNameMap[firstKey];
 
-    return nativeEntry?.official ?? country.name?.common ?? "Unknown";
+    return nativeEntry?.official || country.name?.common || "Unknown";
   }
 
   return country.name?.common || "Unknown";
