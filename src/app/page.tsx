@@ -1,205 +1,164 @@
-import Link from "next/link";
-import { ModeToggle } from "@/components/mode-toggle";
-import { CountryCard } from "@/components/country-card";
+"use client";
 
-const country = {
-  name: {
-    common: "Estonia",
-    official: "Republic of Estonia",
-    nativeName: {
-      est: {
-        official: "Eesti Vabariik",
-        common: "Eesti",
-      },
-    },
-  },
-  tld: [".ee"],
-  cca2: "EE",
-  ccn3: "233",
-  cioc: "EST",
-  independent: true,
-  status: "officially-assigned",
-  unMember: true,
-  currencies: {
-    EUR: {
-      symbol: "€",
-      name: "Euro",
-    },
-  },
-  idd: {
-    root: "+3",
-    suffixes: ["72"],
-  },
-  capital: ["Tallinn"],
-  altSpellings: ["EE", "Eesti", "Republic of Estonia", "Eesti Vabariik"],
-  region: "Europe",
-  subregion: "Northern Europe",
-  languages: {
-    est: "Estonian",
-  },
-  latlng: [59, 26],
-  landlocked: false,
-  borders: ["LVA", "RUS"],
-  area: 45227,
-  demonyms: {
-    eng: {
-      f: "Estonian",
-      m: "Estonian",
-    },
-    fra: {
-      f: "Estonienne",
-      m: "Estonien",
-    },
-  },
-  cca3: "EST",
-  translations: {
-    ara: {
-      official: "جمهورية إستونيا",
-      common: "إستونيا",
-    },
-    bre: {
-      official: "Republik Estonia",
-      common: "Estonia",
-    },
-    ces: {
-      official: "Estonská republika",
-      common: "Estonsko",
-    },
-    cym: {
-      official: "Gweriniaeth Estonia",
-      common: "Estonia",
-    },
-    deu: {
-      official: "Republik Estland",
-      common: "Estland",
-    },
-    est: {
-      official: "Eesti Vabariik",
-      common: "Eesti",
-    },
-    fin: {
-      official: "Viron tasavalta",
-      common: "Viro",
-    },
-    fra: {
-      official: "République d'Estonie",
-      common: "Estonie",
-    },
-    hrv: {
-      official: "Republika Estonija",
-      common: "Estonija",
-    },
-    hun: {
-      official: "Észt Köztársaság",
-      common: "Észtország",
-    },
-    ind: {
-      official: "Republik Estonia",
-      common: "Estonia",
-    },
-    ita: {
-      official: "Repubblica di Estonia",
-      common: "Estonia",
-    },
-    jpn: {
-      official: "エストニア共和国",
-      common: "エストニア",
-    },
-    kor: {
-      official: "에스토니아 공화국",
-      common: "에스토니아",
-    },
-    nld: {
-      official: "Republiek Estland",
-      common: "Estland",
-    },
-    per: {
-      official: "جمهوری استونی",
-      common: "اِستونی",
-    },
-    pol: {
-      official: "Republika Estońska",
-      common: "Estonia",
-    },
-    por: {
-      official: "República da Estónia",
-      common: "Estónia",
-    },
-    rus: {
-      official: "Эстонская Республика",
-      common: "Эстония",
-    },
-    slk: {
-      official: "Estónska republika",
-      common: "Estónsko",
-    },
-    spa: {
-      official: "República de Estonia",
-      common: "Estonia",
-    },
-    srp: {
-      official: "Естонска Република",
-      common: "Естонија",
-    },
-    swe: {
-      official: "Republiken Estland",
-      common: "Estland",
-    },
-    tur: {
-      official: "Estonya Cumhuriyeti",
-      common: "Estonya",
-    },
-    urd: {
-      official: "جمہوریہ اسٹونیا",
-      common: "اسٹونیا",
-    },
-    zho: {
-      official: "爱沙尼亚共和国",
-      common: "爱沙尼亚",
-    },
-  },
-  flag: "🇪🇪",
-  maps: {
-    googleMaps: "https://goo.gl/maps/6SsynwGUodL1sDvq8",
-    openStreetMaps: "https://www.openstreetmap.org/relation/79510",
-  },
-  population: 1331057,
-  gini: {
-    "2018": 30.3,
-  },
-  fifa: "EST",
-  car: {
-    signs: ["EST"],
-    side: "right",
-  },
-  timezones: ["UTC+02:00"],
-  continents: ["Europe"],
-  flags: {
-    png: "https://flagcdn.com/w320/ee.png",
-    svg: "https://flagcdn.com/ee.svg",
-    alt: "The flag of Estonia is composed of three equal horizontal bands of blue, black and white.",
-  },
-  coatOfArms: {
-    png: "https://mainfacts.com/media/images/coats_of_arms/ee.png",
-    svg: "https://mainfacts.com/media/images/coats_of_arms/ee.svg",
-  },
-  startOfWeek: "monday",
-  capitalInfo: {
-    latlng: [59.43, 24.72],
-  },
-  postalCode: {
-    format: "#####",
-    regex: "^(\\d{5})$",
-  },
-};
+import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { MagnifyingGlass } from "@phosphor-icons/react";
+
+import type { Country } from "@/types/country";
+import { CountryCard } from "@/components/country-card";
+import {
+  fetchAllCountries,
+  fetchCountriesByName,
+  fetchCountriesByRegion,
+} from "@/lib/api";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const REGIONS = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
 
 export default function Page() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500); // 500ms debounce delay
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+
+  const {
+    data: allCountries,
+    isLoading: isLoadingAll,
+    isError: isErrorAll,
+    error: errorAll,
+  } = useQuery<Country[], Error>({
+    queryKey: ["countries", "all"],
+    queryFn: fetchAllCountries,
+    enabled: !debouncedSearchTerm && !selectedRegion,
+  });
+
+  const {
+    data: searchedCountries,
+    isLoading: isLoadingSearch,
+    isError: isErrorSearch,
+    error: errorSearch,
+  } = useQuery<Country[], Error>({
+    queryKey: ["countries", "name", debouncedSearchTerm],
+    queryFn: () => fetchCountriesByName(debouncedSearchTerm),
+    enabled: !!debouncedSearchTerm,
+  });
+
+  const {
+    data: regionalCountries,
+    isLoading: isLoadingRegion,
+    isError: isErrorRegion,
+    error: errorRegion,
+  } = useQuery<Country[], Error>({
+    queryKey: ["countries", "region", selectedRegion],
+    queryFn: () => fetchCountriesByRegion(selectedRegion),
+    enabled: !!selectedRegion && !debouncedSearchTerm,
+  });
+
+  let countriesToDisplay: Country[] | undefined = [];
+  let isLoading = false;
+  let isError = false;
+  let errorMessage: string | undefined = "";
+
+  if (debouncedSearchTerm) {
+    countriesToDisplay = searchedCountries;
+    isLoading = isLoadingSearch;
+    isError = isErrorSearch;
+    errorMessage = errorSearch?.message;
+  } else if (selectedRegion) {
+    countriesToDisplay = regionalCountries;
+    isLoading = isLoadingRegion;
+    isError = isErrorRegion;
+    errorMessage = errorRegion?.message;
+  } else {
+    countriesToDisplay = allCountries;
+    isLoading = isLoadingAll;
+    isError = isErrorAll;
+    errorMessage = errorAll?.message;
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading countries...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Error fetching countries: {errorMessage}</p>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <h1>Home</h1>
-      <Link href="/about">About</Link>
-      <ModeToggle />
-      <CountryCard country={country} />
+    <div className="max-w-[1368px] mx-auto pt-5 sm:pt-10">
+      <div className="flex flex-col sm:flex-row gap-10 mb-10 justify-between px-4 sm:px-16">
+        <div className="relative w-full sm:w-[400px]">
+          <MagnifyingGlass
+            className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground dark:text-white"
+            size={18}
+          />
+          <Input
+            type="text"
+            placeholder="Search for a country..."
+            value={searchTerm}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(e.target.value)
+            }
+            className="pl-16 w-full"
+          />
+        </div>
+        <Select
+          value={selectedRegion}
+          onValueChange={(value: string) => {
+            setSelectedRegion(value === "all" ? "" : value);
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by Region" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Regions</SelectItem>
+            {REGIONS.map((region) => (
+              <SelectItem key={region} value={region}>
+                {region}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      {countriesToDisplay && countriesToDisplay.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 px-16 pb-10">
+          {countriesToDisplay.map((country, index) => (
+            <Link key={country.cca3} href={`/country/${country.cca3}`}>
+              <CountryCard country={country} priority={index < 8} />
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center">
+          <p>No countries found.</p>
+        </div>
+      )}
     </div>
   );
 }

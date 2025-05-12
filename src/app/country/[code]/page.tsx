@@ -52,7 +52,7 @@ export default function CountryPage() {
   return (
     <div className="px-4 py-7 sm:px-16 sm:pt-16 mx-auto max-w-[1368px]">
       <div className="mb-14">
-        <Link href="/countries">
+        <Link href="/">
           <Button
             size="sm"
             variant="outline"
