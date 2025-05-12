@@ -27,7 +27,7 @@ export const getCurrencies = (country: Country): string => {
 };
 
 export const getLanguages = (country: Country): string => {
-  if (country.languages) {
+  if (country.languages && Object.keys(country.languages).length > 0) {
     return Object.values(country.languages).join(", ");
   }
   return "N/A";
