@@ -3,7 +3,7 @@ import type { Country } from "@/types/country";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function fetchAllCountries(): Promise<Country[]> {
-  const response = await fetch(`${API_BASE_URL}/all`);
+  const response = await fetch(`${API_BASE_URL}/all?fields=name,flags,region,capital,population,cca2,cca3`);
   if (!response.ok) {
     throw new Error("Failed to fetch countries");
   }
