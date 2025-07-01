@@ -50,19 +50,38 @@
 ```
 src/
 ├── app/
-│   ├── (routes)/
-│   │   ├── page.tsx           # Vista principal con grid de países
-│   │   └── country/[code]/    # Página de detalle de país
-│   └── layout.tsx             # Layout principal con providers
+│   ├── page.tsx               # Vista principal con grid de países
+│   ├── layout.tsx             # Layout principal con providers
+│   ├── globals.css            # Estilos globales
+│   └── country/
+│       └── [code]/
+│           └── page.tsx       # Página de detalle de país
 ├── components/
-│   ├── CountryCard.tsx        # Tarjeta de país reutilizable
-│   ├── SearchBar.tsx          # Componente de búsqueda
-│   └── RegionFilter.tsx       # Filtro por región
+│   ├── country-card.tsx       # Tarjeta de país reutilizable
+│   ├── header.tsx             # Componente de encabezado
+│   ├── mode-toggle.tsx        # Toggle para modo oscuro/claro
+│   ├── tanstack-query-provider.tsx # Provider de TanStack Query
+│   ├── theme-provider.tsx     # Provider de temas
+│   ├── ui/                    # Componentes UI de Shadcn
+│   │   ├── aspect-ratio.tsx
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── input.tsx
+│   │   └── select.tsx
+│   └── __tests__/             # Tests de componentes
+│       ├── country-card.test.tsx
+│       └── mode-toggle.test.tsx
 ├── lib/
 │   ├── api.ts                 # Servicios de API
-│   └── tanstack-query-provider.tsx
-└── types/
-    └── country.ts            # Definiciones de tipos TypeScript
+│   └── utils.ts               # Utilidades generales
+├── types/
+│   └── country.ts             # Definiciones de tipos TypeScript
+├── utils/
+│   ├── country.ts             # Utilidades específicas de países
+│   └── __tests__/
+│       └── country.test.ts    # Tests de utilidades
+└── __tests__/                 # Tests de páginas
+    └── page.test.tsx
 ```
 
 ### Características Implementadas
